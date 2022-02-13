@@ -19,22 +19,33 @@ import com.codingbjs.criminalintent.crime.Crime;
 import com.codingbjs.criminalintent.crime.CrimeLab;
 import com.codingbjs.criminalintent.databinding.FragmentCrimeBinding;
 
-import java.util.Objects;
 import java.util.UUID;
 
 public class CrimeFragment extends Fragment {
+
+    private static final String ARG_CRIME_ID = "crime_id";
 
     private Crime crime;
 
     FragmentCrimeBinding binding;
 
+    public static CrimeFragment newInstance(UUID crimeId){
+        Bundle args = new Bundle();
+        args.putSerializable(ARG_CRIME_ID, crimeId);
+
+        CrimeFragment crimeFragment = new CrimeFragment();
+        crimeFragment.setArguments(args);
+        return crimeFragment;
+    }
+
+
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Intent intent = requireActivity().getIntent();
-        if(intent != null) {
-            UUID crimeId = (UUID) intent.getSerializableExtra(CrimeActivity.EXTRA_CRIME_ID);
+        if (getArguments() != null) {
+            UUID crimeId = (UUID) getArguments().getSerializable(ARG_CRIME_ID);
             crime = CrimeLab.getInstance(getActivity()).getCrime(crimeId);
         }
 

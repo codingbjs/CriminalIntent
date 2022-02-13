@@ -1,5 +1,6 @@
 package com.codingbjs.criminalintent.fragment;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -23,6 +24,8 @@ import java.util.List;
 
 public class CrimeListFragment extends Fragment {
 
+    private static final int REQUEST_CRIME = 1;
+
     FragmentCrimeListBinding binding;
 
     private CrimeAdapter crimeAdapter;
@@ -39,11 +42,23 @@ public class CrimeListFragment extends Fragment {
         return binding.getRoot();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateUI();
+    }
+
     private void updateUI() {
         CrimeLab crimeLab = CrimeLab.getInstance(getActivity());
-        crimeAdapter = new CrimeAdapter(crimeLab.getCrimeList());
-        binding.crimeRecyclerView.setAdapter(crimeAdapter);
+        if(crimeAdapter == null) {
+            crimeAdapter = new CrimeAdapter(crimeLab.getCrimeList());
+            binding.crimeRecyclerView.setAdapter(crimeAdapter);
+        } else {
+            crimeAdapter.notifyItemChanged(0);
+        }
     }
+
+
 
     private class CrimeHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
