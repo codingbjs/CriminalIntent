@@ -1,4 +1,4 @@
-package com.codingbjs.criminalintent;
+package com.codingbjs.criminalintent.activity;
 
 import androidx.fragment.app.Fragment;
 

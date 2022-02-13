@@ -1,4 +1,4 @@
-package com.codingbjs.criminalintent;
+package com.codingbjs.criminalintent.activity;
 
 import android.os.Bundle;
 
@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.codingbjs.criminalintent.R;
 import com.codingbjs.criminalintent.databinding.ActivityFragmentBinding;
 
 public abstract class SingleFragmentActivity extends AppCompatActivity {
