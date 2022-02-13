@@ -3,9 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Android_SDK/platforms/android-32/data/res/layout/simple_list_item_1.xml" value="0.325" />
         <entry key="..\:/Android_Work/CriminalIntent/app/src/main/res/layout-land/fragment_crime.xml" value="0.21354166666666666" />
         <entry key="..\:/Android_Work/CriminalIntent/app/src/main/res/layout/activity_crime.xml" value="0.325" />
         <entry key="..\:/Android_Work/CriminalIntent/app/src/main/res/layout/fragment_crime.xml" value="0.325" />
+        <entry key="..\:/Android_Work/CriminalIntent/app/src/main/res/layout/fragment_crime_list.xml" value="0.325" />
       </map>
     </option>
   </component>
