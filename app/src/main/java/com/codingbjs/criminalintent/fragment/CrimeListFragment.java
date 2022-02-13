@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.codingbjs.criminalintent.crime.Crime;
 import com.codingbjs.criminalintent.crime.CrimeLab;
 import com.codingbjs.criminalintent.databinding.FragmentCrimeListBinding;
+import com.codingbjs.criminalintent.databinding.ListItemCrimeBinding;
 
 import java.util.List;
 
@@ -42,13 +44,27 @@ public class CrimeListFragment extends Fragment {
         binding.crimeRecyclerView.setAdapter(crimeAdapter);
     }
 
-    private class CrimeHolder extends RecyclerView.ViewHolder {
+    private class CrimeHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        TextView textView;
+        private ListItemCrimeBinding binding;
+        private Crime crime;
 
-        public CrimeHolder(@NonNull View itemView) {
-            super(itemView);
-            textView = (TextView) itemView;
+        public CrimeHolder(@NonNull ListItemCrimeBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
+            this.binding.getRoot().setOnClickListener(this);
+        }
+
+        public void bindCrime(Crime crime){
+            this.crime = crime;
+            binding.listItemCrimeTitleTextView.setText(crime.getTitle());
+            binding.listItemCrimeDateTextView.setText(crime.getDate());
+            binding.listItemCrimeSolvedCheckBox.setChecked(crime.isSolved());
+        }
+
+        @Override
+        public void onClick(View view) {
+            Toast.makeText(getActivity(), crime.getTitle() + " 선택됨", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -64,15 +80,15 @@ public class CrimeListFragment extends Fragment {
         @NonNull
         @Override
         public CrimeHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
-            View view = layoutInflater.inflate(android.R.layout.simple_list_item_1, parent, false);
-            return new CrimeHolder(view);
+            ListItemCrimeBinding binding = ListItemCrimeBinding.inflate(
+                                LayoutInflater.from(getActivity()), parent, false);
+            return new CrimeHolder(binding);
         }
 
         @Override
         public void onBindViewHolder(@NonNull CrimeHolder holder, int position) {
             Crime crime = crimeList.get(position);
-            holder.textView.setText(crime.getTitle());
+            holder.bindCrime(crime);
         }
 
         @Override
