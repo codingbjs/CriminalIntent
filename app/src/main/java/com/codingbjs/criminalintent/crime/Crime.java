@@ -31,8 +31,8 @@ public class Crime {
         this.title = title;
     }
 
-    public String getDate() {
-        return dateFormat.format(date);
+    public Date getDate() {
+        return date;
     }
 
     public void setDate(Date date) {

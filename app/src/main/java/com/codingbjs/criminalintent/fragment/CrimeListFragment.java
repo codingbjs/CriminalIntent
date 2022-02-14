@@ -59,8 +59,6 @@ public class CrimeListFragment extends Fragment {
         }
     }
 
-
-
     private class CrimeHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private ListItemCrimeBinding binding;
@@ -76,7 +74,7 @@ public class CrimeListFragment extends Fragment {
         public void bindCrime(Crime crime){
             this.crime = crime;
             binding.listItemCrimeTitleTextView.setText(crime.getTitle());
-            binding.listItemCrimeDateTextView.setText(crime.getDate());
+            binding.listItemCrimeDateTextView.setText(crime.getDate().toString());
             binding.listItemCrimeSolvedCheckBox.setChecked(crime.isSolved());
         }
 

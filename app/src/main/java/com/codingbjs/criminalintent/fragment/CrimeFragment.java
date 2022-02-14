@@ -14,12 +14,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentResultListener;
 
 import com.codingbjs.criminalintent.activity.CrimeActivity;
 import com.codingbjs.criminalintent.crime.Crime;
 import com.codingbjs.criminalintent.crime.CrimeLab;
 import com.codingbjs.criminalintent.databinding.FragmentCrimeBinding;
 
+import java.util.Date;
 import java.util.UUID;
 
 public class CrimeFragment extends Fragment {
@@ -27,9 +29,14 @@ public class CrimeFragment extends Fragment {
     private static final String ARG_CRIME_ID = "crime_id";
     private static final String DIALOG_DATE = "DialogDate";
 
+    public static final String REQUEST_DATE = "RequestDate";
+
+
     private Crime crime;
 
     FragmentCrimeBinding binding;
+
+    FragmentManager fragmentManager;
 
     public static CrimeFragment newInstance(UUID crimeId){
         Bundle args = new Bundle();
@@ -57,6 +64,7 @@ public class CrimeFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentCrimeBinding.inflate(inflater, container, false);
+        fragmentManager = getParentFragmentManager();
 
         binding.crimeTitle.addTextChangedListener(new TextWatcher() {
             @Override
@@ -76,7 +84,7 @@ public class CrimeFragment extends Fragment {
         });
 
         binding.crimeTitle.setText(crime.getTitle());
-        binding.crimeDate.setText(crime.getDate());
+        binding.crimeDate.setText(crime.getDate().toString());
         binding.crimeSolved.setChecked(crime.isSolved());
 
         binding.crimeSolved.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -89,9 +97,22 @@ public class CrimeFragment extends Fragment {
         binding.crimeDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FragmentManager fragmentManager = getParentFragmentManager();
-                DatePickerFragment datePickerFragment = new DatePickerFragment();
+                DatePickerFragment datePickerFragment = DatePickerFragment.newInstance(crime.getDate());
+//                fragmentManager.setFragmentResult(REQUEST_DATE, null);
                 datePickerFragment.show(fragmentManager, DIALOG_DATE);
+            }
+        });
+
+        fragmentManager.setFragmentResultListener(REQUEST_DATE, this, new FragmentResultListener() {
+            @Override
+            public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
+                switch (requestKey){
+                    case REQUEST_DATE:
+                        Date date = (Date) result.getSerializable(DatePickerFragment.ARG_DATE);
+                        crime.setDate(date);
+                        binding.crimeDate.setText(crime.getDate().toString());
+                        break;
+                }
             }
         });
 
