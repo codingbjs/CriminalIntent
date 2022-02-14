@@ -13,6 +13,7 @@ import android.widget.CompoundButton;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.codingbjs.criminalintent.activity.CrimeActivity;
 import com.codingbjs.criminalintent.crime.Crime;
@@ -24,6 +25,7 @@ import java.util.UUID;
 public class CrimeFragment extends Fragment {
 
     private static final String ARG_CRIME_ID = "crime_id";
+    private static final String DIALOG_DATE = "DialogDate";
 
     private Crime crime;
 
@@ -75,13 +77,21 @@ public class CrimeFragment extends Fragment {
 
         binding.crimeTitle.setText(crime.getTitle());
         binding.crimeDate.setText(crime.getDate());
-        binding.crimeDate.setEnabled(false);
         binding.crimeSolved.setChecked(crime.isSolved());
 
         binding.crimeSolved.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 crime.setSolved(b);
+            }
+        });
+
+        binding.crimeDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentManager fragmentManager = getParentFragmentManager();
+                DatePickerFragment datePickerFragment = new DatePickerFragment();
+                datePickerFragment.show(fragmentManager, DIALOG_DATE);
             }
         });
 
