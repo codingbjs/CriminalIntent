@@ -20,7 +20,7 @@
         </activity>
 
         <activity
-            android:name=".activity.CrimeActivity"
+            android:name=".activity.CrimePagerActivity"
             android:exported="true"/>
 
     </application>

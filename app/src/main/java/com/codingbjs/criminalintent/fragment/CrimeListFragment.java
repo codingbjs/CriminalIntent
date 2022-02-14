@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.codingbjs.criminalintent.activity.CrimeActivity;
+import com.codingbjs.criminalintent.activity.CrimePagerActivity;
 import com.codingbjs.criminalintent.crime.Crime;
 import com.codingbjs.criminalintent.crime.CrimeLab;
 import com.codingbjs.criminalintent.databinding.FragmentCrimeListBinding;
@@ -64,6 +65,7 @@ public class CrimeListFragment extends Fragment {
 
         private ListItemCrimeBinding binding;
         private Crime crime;
+        private int clickPosition = 0;
 
         public CrimeHolder(@NonNull ListItemCrimeBinding binding) {
             super(binding.getRoot());
@@ -80,8 +82,9 @@ public class CrimeListFragment extends Fragment {
 
         @Override
         public void onClick(View view) {
-            Toast.makeText(getActivity(), crime.getTitle() + " 선택됨", Toast.LENGTH_SHORT).show();
-            Intent intent = CrimeActivity.newIntent(getActivity(), crime.getUuid());
+            clickPosition = getAdapterPosition();
+            Toast.makeText(getActivity(), crime.getTitle() + " 선택됨" + clickPosition, Toast.LENGTH_SHORT).show();
+            Intent intent = CrimePagerActivity.newIntent(getActivity(), crime.getUuid());
             startActivity(intent);
         }
     }
@@ -89,7 +92,7 @@ public class CrimeListFragment extends Fragment {
 
     private class CrimeAdapter extends RecyclerView.Adapter<CrimeHolder> {
 
-        private List<Crime> crimeList;
+        private final List<Crime> crimeList;
 
         public CrimeAdapter(List<Crime> crimeList) {
             this.crimeList = crimeList;
