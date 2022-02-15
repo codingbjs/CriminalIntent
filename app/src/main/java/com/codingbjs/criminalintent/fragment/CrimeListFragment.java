@@ -51,11 +51,13 @@ public class CrimeListFragment extends Fragment {
 
     private void updateUI() {
         CrimeLab crimeLab = CrimeLab.getInstance(getActivity());
+        List<Crime> crimeList = crimeLab.getCrimeList();
         if(crimeAdapter == null) {
             crimeAdapter = new CrimeAdapter(crimeLab.getCrimeList());
             binding.crimeRecyclerView.setAdapter(crimeAdapter);
         } else {
-            crimeAdapter.notifyItemChanged(0);
+            crimeAdapter.setCrimeList(crimeList);
+            crimeAdapter.notifyDataSetChanged();
         }
     }
 
@@ -90,7 +92,7 @@ public class CrimeListFragment extends Fragment {
 
     private class CrimeAdapter extends RecyclerView.Adapter<CrimeHolder> {
 
-        private final List<Crime> crimeList;
+        private List<Crime> crimeList;
 
         public CrimeAdapter(List<Crime> crimeList) {
             this.crimeList = crimeList;
@@ -113,6 +115,10 @@ public class CrimeListFragment extends Fragment {
         @Override
         public int getItemCount() {
             return crimeList.size();
+        }
+
+        public void setCrimeList(List<Crime> crimeList) {
+            this.crimeList = crimeList;
         }
     }
 }

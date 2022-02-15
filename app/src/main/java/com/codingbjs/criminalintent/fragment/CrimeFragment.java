@@ -115,4 +115,10 @@ public class CrimeFragment extends Fragment {
 
         return binding.getRoot();
     }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        CrimeLab.getInstance(getActivity()).updateCrime(crime);
+    }
 }

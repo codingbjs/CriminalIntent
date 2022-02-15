@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.UUID;
 
 public class Crime {
-    private final UUID uuid;
+    private UUID uuid;
     private String title;
     private Date date;
     private boolean solved;
@@ -15,7 +15,11 @@ public class Crime {
 
 
     public Crime() {
-        this.uuid = UUID.randomUUID();
+        this(UUID.randomUUID());
+    }
+
+    public Crime (UUID id){
+        this.uuid = id;
         setDate(new Date());
     }
 
