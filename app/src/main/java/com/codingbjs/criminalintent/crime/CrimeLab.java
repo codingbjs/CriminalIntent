@@ -1,6 +1,9 @@
 package com.codingbjs.criminalintent.crime;
 
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+
+import com.codingbjs.criminalintent.database.CrimeBaseHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,9 +13,12 @@ public class CrimeLab {
 
     private static CrimeLab crimeLab;
     private List<Crime> crimeList;
-
+    private Context context;
+    private SQLiteDatabase sqLiteDatabase;
 
     private CrimeLab(Context context) {
+        this.context = context.getApplicationContext();
+        sqLiteDatabase = new CrimeBaseHelper(this.context).getWritableDatabase();
         crimeList = new ArrayList<>();
 
         for (int i = 0; i < 100; i++) {

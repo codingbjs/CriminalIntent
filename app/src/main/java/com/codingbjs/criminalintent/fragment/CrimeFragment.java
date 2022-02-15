@@ -1,10 +1,8 @@
 package com.codingbjs.criminalintent.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +14,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentResultListener;
 
-import com.codingbjs.criminalintent.activity.CrimeActivity;
 import com.codingbjs.criminalintent.crime.Crime;
 import com.codingbjs.criminalintent.crime.CrimeLab;
 import com.codingbjs.criminalintent.databinding.FragmentCrimeBinding;
